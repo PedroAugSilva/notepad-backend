@@ -14,7 +14,7 @@ module.exports = {
         res.json({ message: "User already exists" }).status(400);
       }
     } catch (error) {
-      res.json(error.message).status(401);
+      res.json(error.message).status(400);
     }
   },
   async listUser(req, res) {
@@ -23,10 +23,10 @@ module.exports = {
       if (users) {
         res.json({ users }).status(200);
       } else {
-        res.json({ message: "User not found" });
+        res.json({ message: "User not found" }).status(404);
       }
     } catch (error) {
-      res.json({ error }).status(401);
+      res.json({ error }).status(400);
     }
   },
   async updateUser(req, res) {
@@ -43,7 +43,7 @@ module.exports = {
       if (hasUser) {
         res.status(200).json({ message: "User updated" });
       } else {
-        res.json({ message: "User nos found" }).status(400);
+        res.json({ message: "User nos found" }).status(404);
       }
     } catch (err) {
       res.status(400).json({ err });
@@ -66,7 +66,7 @@ module.exports = {
       if (user) {
         res.status(200).json({ user, token: token });
       } else {
-        res.status(400).json({ message: "unauthorized" });
+        res.status(401).json({ message: "unauthorized" });
       }
     } catch (error) {
       res.status(400).json({ error });
