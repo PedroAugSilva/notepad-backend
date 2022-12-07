@@ -45,9 +45,9 @@ module.exports = {
       return res.status(200).json({ message: "note updated" });
     } catch (err) {
       if (err.kind === "ObjectId") {
-        return res.status(400).json({ message: "Notes not found" });
+        return res.status(404).json({ message: "Notes not found" });
       }
-      return res.status(500).json({ message: "Note not updating" });
+      return res.status(400).json({ message: "Note not updating" });
     }
   },
   async deleteNote(req, res) {
@@ -55,7 +55,7 @@ module.exports = {
       const { id } = req.params;
       const note = await Note.findByIdAndRemove( id );
       if (!note) {
-        res.status(500).json({ message: "note not found" });
+        res.status(404).json({ message: "note not found" });
       }
       return res.status(200).json({ message: "note deleted" });
     } catch (error) {
